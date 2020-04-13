@@ -1,12 +1,10 @@
 from django.contrib.auth.models import User
 from django.test import TestCase
-
-# Create your tests here.
 from django.urls import reverse, resolve
 
+from boards.views import home, board_topics
+from boards.models import Board, Topic, Post
 from boards.forms import NewTopicForm
-from boards.models import Board, Post, Topic
-from .views import home, board_topics, new_topic
 
 
 class HomeTests(TestCase):
