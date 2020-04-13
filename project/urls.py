@@ -48,6 +48,8 @@ urlpatterns = [
          name='password_change_done'),
     path('boards/<int:pk>/', boards_views.board_topics, name='board_topics'),
     path('boards/<int:pk>/new/', boards_views.new_topic, name='new_topic'),
+    path('boards/<int:pk>/topics/<int:topic_pk>/', boards_views.topic_posts, name='topic_posts'),
+    path('boards/<int:pk>/topics/<int:topic_pk>/reply/', boards_views.reply_topic, name='reply_topic'),
     path('admin/', admin.site.urls),
     path('hello/', boards_views.hello, name='hello'),
 
