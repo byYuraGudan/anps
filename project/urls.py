@@ -20,18 +20,18 @@ from accounts import views as accounts_views
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
-    path('', boards_views.home, name='home'),
+    path('', boards_views.BoardListView.as_view(), name='home'),
     path('signup/', accounts_views.signup, name='signup'),
     path('login/', auth_views.LoginView.as_view(template_name='accounts/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
-    path(r'reset/',
+    path('reset/',
          auth_views.PasswordResetView.as_view(
              template_name='accounts/password_reset.html',
              email_template_name='accounts/password_reset_email.html',
              subject_template_name='accounts/password_reset_subject.txt'
          ),
          name='password_reset'),
-    path(r'reset/done/',
+    path('reset/done/',
          auth_views.PasswordResetDoneView.as_view(template_name='accounts/password_reset_done.html'),
          name='password_reset_done'),
     path('reset/<slug:uidb64>/<slug:token>/',
@@ -46,10 +46,13 @@ urlpatterns = [
     path('settings/password/done/',
          auth_views.PasswordChangeDoneView.as_view(template_name='accounts/password_change_done.html'),
          name='password_change_done'),
-    path('boards/<int:pk>/', boards_views.board_topics, name='board_topics'),
+    path('settings/account/', accounts_views.UserUpdateView.as_view(), name='my_account'),
+    path('boards/<int:pk>/', boards_views.TopicListView.as_view(), name='board_topics'),
     path('boards/<int:pk>/new/', boards_views.new_topic, name='new_topic'),
-    path('boards/<int:pk>/topics/<int:topic_pk>/', boards_views.topic_posts, name='topic_posts'),
+    path('boards/<int:pk>/topics/<int:topic_pk>/', boards_views.PostListView.as_view(), name='topic_posts'),
     path('boards/<int:pk>/topics/<int:topic_pk>/reply/', boards_views.reply_topic, name='reply_topic'),
+    path('boards/<int:pk>/topics/<int:topic_pk>/posts/<int:post_pk>/edit/',
+         boards_views.PostUpdateView.as_view(), name='edit_post'),
     path('admin/', admin.site.urls),
     path('hello/', boards_views.hello, name='hello'),
 

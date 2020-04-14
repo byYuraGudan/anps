@@ -1,5 +1,7 @@
 from django.test import TestCase
-from django.urls import reverse
+from django.urls import reverse, resolve
+
+from boards.views import TopicListView
 from ..models import Board
 
 
@@ -12,3 +14,9 @@ class LoginRequiredNewTopicTests(TestCase):
     def test_redirection(self):
         login_url = reverse('login')
         self.assertRedirects(self.response, '{login_url}?next={url}'.format(login_url=login_url, url=self.url))
+
+
+class BoardTopicsTests(TestCase):
+    def test_board_topics_url_resolves_board_topics_view(self):
+        view = resolve('/boards/1/')
+        self.assertEquals(view.func.view_class, TopicListView)
